@@ -1,13 +1,11 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom'
+import { AppRoutes } from './routes';
 
-function App() {
+export const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        
-      </header>
-    </div>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
-
-export default App;
