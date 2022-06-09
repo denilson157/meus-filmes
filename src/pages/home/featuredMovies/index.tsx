@@ -1,19 +1,15 @@
-import { Button, Grid, TextField, Box, Typography } from '@mui/material';
-import { makeStyles } from '@material-ui/styles';
+import { Typography } from '@mui/material';
 import NavigateBeforeRoundedIcon from '@mui/icons-material/NavigateBeforeRounded';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
-import { useState } from 'react'
 import { UseFeatuedMovies } from './useFeaturedMovies';
 
 export const FeaturedMovies = () => {
 
     const {
         scrollx,
-        setScrollx,
         handleLeftArrow,
         handleRightArrow,
         featuredMovies,
-        setFeaturedMovies
 
     } = UseFeatuedMovies()
 

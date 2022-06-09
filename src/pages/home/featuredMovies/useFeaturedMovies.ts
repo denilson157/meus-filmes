@@ -35,11 +35,9 @@ export const UseFeatuedMovies = () => {
 
     return {
         scrollx,
-        setScrollx,
         handleLeftArrow,
         handleRightArrow,
         featuredMovies,
-        setFeaturedMovies
     }
 
 }
