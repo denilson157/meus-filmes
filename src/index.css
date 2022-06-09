@@ -18,3 +18,71 @@ a:-webkit-any-link {
   color: black;
   cursor: pointer;
 }
+
+.rowMovie {
+  margin-bottom: 30px;
+}
+
+.rowMovie h2 {
+  margin: 0px 0px 0px 30px;
+}
+
+.rowMovie--listarea {
+  overflow-x: hidden;
+  padding-left: 30px;
+}
+
+.rowMovie--list {
+  transition: all ease 0.2s;
+}
+
+.rowMovie--item {
+  display: inline-block;
+  width: 150px;
+  cursor: pointer;
+}
+
+.rowMovie--item img {
+  width: 100%;
+  transform: scale(0.9);
+  transition: all ease 0.2s;
+}
+
+.rowMovie--item img:hover {
+  transform: scale(1);
+}
+
+.rowMovie--left,.rowMovie--right{
+  position: absolute;
+  width: 40px;
+  height: 225px;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  transition: all ease 0.5s;
+}
+
+.rowMovie--left{
+  left: 0
+}
+.rowMovie--right{
+  right: 0
+}
+
+.rowMovie:hover .rowMovie--left,
+.rowMovie:hover .rowMovie--right
+{
+  opacity: 1;
+}
+
+@media (max-width: 760px){
+  .rowMovie--left,
+  .rowMovie--right{
+      opacity: 1;
+  }
+}

@@ -1,6 +1,7 @@
 import { Button, Grid, TextField, Box } from '@mui/material';
 import { UseHome } from './useHome';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import { FeaturedMovies } from './featuredMovies';
 
 export const Home = () => {
 
@@ -36,7 +37,10 @@ export const Home = () => {
                     </Button>
 
                 </Box>
+
+                <FeaturedMovies />
             </Grid>
+
         </Grid>
     )
 } 
