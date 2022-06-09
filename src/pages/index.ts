@@ -1,2 +1,2 @@
-export { Home } from './Home'
+export { Home } from './home'
 export { FavoriteMovies } from './FavoriteMovies'
