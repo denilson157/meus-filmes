@@ -2,13 +2,15 @@ import { Button, Grid, TextField, Box } from '@mui/material';
 import { UseHome } from './useHome';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { FeaturedMovies } from './featuredMovies';
+import { SearchedMovies } from './searchedMovie';
 
 export const Home = () => {
 
     const {
         movieName,
         setMovieName,
-        searchMovies
+        searchMovies,
+        moviesSearched
     } = UseHome();
 
     return (
@@ -18,7 +20,7 @@ export const Home = () => {
                 <Box sx={{ display: 'flex' }}>
                     <TextField
                         variant="outlined"
-                        placeholder="URL"
+                        placeholder="Ex: Pânico"
                         fullWidth
                         label="Pesquise pelo nome do filme"
                         type="url"
@@ -39,6 +41,7 @@ export const Home = () => {
                 </Box>
 
                 <FeaturedMovies />
+                <SearchedMovies movies={moviesSearched} />
             </Grid>
 
         </Grid>
