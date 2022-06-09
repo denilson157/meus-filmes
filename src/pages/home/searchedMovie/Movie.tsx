@@ -2,6 +2,9 @@ import { Card, Box, CardContent, Typography, CardMedia, Grid } from "@mui/materi
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import { FC, useState } from 'react'
 import { IMovie } from '../../../interface/IMovie'
+import { useMutation } from "@apollo/client";
+import { INSERT_MOVIE } from "../../../graphql/movie/mutation";
+
 
 type IMovieProps = {
     movie: IMovie
@@ -11,6 +14,31 @@ export const Movie: FC<IMovieProps> = ({ movie }) => {
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpanded = () => setExpanded(old => !old)
+    const [insertMovie] = useMutation(INSERT_MOVIE);
+
+    const favoriteMovie = async (movie: IMovie) => {
+
+        try {
+
+            await insertMovie({
+                variables: {
+                    id: movie.id,
+                    title: movie.title,
+                    vote_average: movie.vote_average,
+                    overview: movie.overview,
+                    poster_path: movie.poster_path,
+                    backdrop_path: movie.backdrop_path
+                }
+            })
+
+            return true;
+        }
+        catch (error) {
+            console.log(error)
+            return false;
+        }
+
+    }
 
     return (
         <Grid md={5}>
@@ -26,11 +54,11 @@ export const Movie: FC<IMovieProps> = ({ movie }) => {
                     <CardContent sx={{ flex: '1 0 auto' }}>
                         <Typography component="div" variant="h5">
                             {movie.title}
-                            <FavoriteRoundedIcon color="primary" style={{ marginLeft: 1, cursor: 'pointer' }} />
+                            <FavoriteRoundedIcon onClick={() => favoriteMovie(movie)} color="primary" style={{ marginLeft: 1, cursor: 'pointer' }} />
                         </Typography>
-                        <Typography variant="subtitle1" color="text.secondary" style={{cursor:'pointer'}} component="div" onClick={toggleExpanded}>
+                        <Typography variant="subtitle1" color="text.secondary" style={{ cursor: 'pointer' }} component="div" onClick={toggleExpanded}>
                             {
-                                expanded ?  
+                                expanded ?
                                     <>
                                         {movie.overview}
                                     </>
