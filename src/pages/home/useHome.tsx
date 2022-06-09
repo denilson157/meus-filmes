@@ -8,8 +8,9 @@ export const UseHome = () => {
     const [moviesSearched, setMoviesSearched] = useState<IMovie[]>([]);
 
     const searchMovies = () => {
-        SearchMovies(movieName)
-            .then((m) => setMoviesSearched(m))
+        if (movieName)
+            SearchMovies(movieName)
+                .then((m) => setMoviesSearched(m))
     }
 
     return {
