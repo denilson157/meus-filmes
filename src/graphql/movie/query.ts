@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 export const GET_MOVIES = gql`
-    query GetMovies {
+  subscription GetMovies {
         favorites_movies {
           id
           backdrop_path

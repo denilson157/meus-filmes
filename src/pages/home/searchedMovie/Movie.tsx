@@ -1,20 +1,24 @@
 import { Card, Box, CardContent, Typography, CardMedia, Grid } from "@mui/material"
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import { FC, useState } from 'react'
 import { IMovie } from '../../../interface/IMovie'
 import { useMutation } from "@apollo/client";
-import { INSERT_MOVIE } from "../../../graphql/movie/mutation";
+import { INSERT_MOVIE, REMOVE_MOVIE } from "../../../graphql/movie/mutation";
 
 
 type IMovieProps = {
-    movie: IMovie
+    movie: IMovie,
+    favoriteMoviesId: number[],
+    favoriteMoviesIdDispatch: any,
+    refetchMovies: any
 }
 
-export const Movie: FC<IMovieProps> = ({ movie }) => {
+export const Movie: FC<IMovieProps> = ({ movie, favoriteMoviesId, favoriteMoviesIdDispatch, refetchMovies }) => {
     const [expanded, setExpanded] = useState(false);
-
     const toggleExpanded = () => setExpanded(old => !old)
     const [insertMovie] = useMutation(INSERT_MOVIE);
+    const [removeMovie] = useMutation(REMOVE_MOVIE);
 
     const favoriteMovie = async (movie: IMovie) => {
 
@@ -30,6 +34,31 @@ export const Movie: FC<IMovieProps> = ({ movie }) => {
                     backdrop_path: movie.backdrop_path
                 }
             })
+
+            favoriteMoviesIdDispatch({ type: "INSERT_FAVORITE_MOVIES", payload: movie.id })
+
+            refetchMovies()
+            return true;
+        }
+        catch (error) {
+            console.log(error)
+            return false;
+        }
+
+    }
+
+
+    const unfavoriteMovie = async (movie: IMovie) => {
+
+        try {
+
+            await removeMovie({
+                variables: {
+                    id: movie.id
+                }
+            })
+
+            favoriteMoviesIdDispatch({ type: "REMOVE_FAVORITE_MOVIES", payload: movie.id })
 
             return true;
         }
@@ -54,7 +83,13 @@ export const Movie: FC<IMovieProps> = ({ movie }) => {
                     <CardContent sx={{ flex: '1 0 auto' }}>
                         <Typography component="div" variant="h5">
                             {movie.title}
-                            <FavoriteRoundedIcon onClick={() => favoriteMovie(movie)} color="primary" style={{ marginLeft: 1, cursor: 'pointer' }} />
+                            {
+                                favoriteMoviesId.includes(movie.id) ?
+                                    <FavoriteRoundedIcon color="primary" onClick={() => unfavoriteMovie(movie)} style={{ marginLeft: 1, cursor: 'pointer' }} />
+                                    :
+                                    <FavoriteBorderRoundedIcon onClick={() => favoriteMovie(movie)} color="primary" style={{ marginLeft: 1, cursor: 'pointer' }} />
+
+                            }
                         </Typography>
                         <Typography variant="subtitle1" color="text.secondary" style={{ cursor: 'pointer' }} component="div" onClick={toggleExpanded}>
                             {

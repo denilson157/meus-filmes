@@ -7,3 +7,13 @@ mutation InsertMovie($id: Int!, $title: String!, $overview: String!, $vote_avera
     }
   }
 `
+
+export const REMOVE_MOVIE = gql`
+
+mutation Delete_Movie($id: Int!) {
+  delete_favorites_movies(where: {id: {_eq: $id}}) {
+    affected_rows
+  }
+}
+
+`

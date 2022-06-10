@@ -41,7 +41,7 @@ export const Home = () => {
                 </Box>
 
                 <FeaturedMovies />
-                <SearchedMovies movies={moviesSearched} />
+                <SearchedMovies refetchMovies={() => searchMovies()} movies={moviesSearched} />
             </Grid>
 
         </Grid>
