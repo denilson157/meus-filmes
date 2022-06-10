@@ -9,24 +9,30 @@ import { INSERT_MOVIE, REMOVE_MOVIE } from "../../../graphql/movie/mutation";
 
 type IMovieProps = {
     movie: IMovie,
-    favoriteMoviesId: number[],
+    favoriteMoviesId: string[],
     favoriteMoviesIdDispatch: any,
-    refetchMovies: any
+    refetchMovies: any,
+    toggleLoading: (bool: boolean) => void
+
 }
 
-export const Movie: FC<IMovieProps> = ({ movie, favoriteMoviesId, favoriteMoviesIdDispatch, refetchMovies }) => {
+export const Movie: FC<IMovieProps> = ({ movie, favoriteMoviesId, favoriteMoviesIdDispatch, refetchMovies, toggleLoading }) => {
     const [expanded, setExpanded] = useState(false);
     const toggleExpanded = () => setExpanded(old => !old)
     const [insertMovie] = useMutation(INSERT_MOVIE);
     const [removeMovie] = useMutation(REMOVE_MOVIE);
 
     const favoriteMovie = async (movie: IMovie) => {
-
+        toggleLoading(true)
+        let movieId = movie.id
+        if (typeof movieId === 'number') {
+            movieId = parseInt(movieId).toString()
+        }
         try {
 
             await insertMovie({
                 variables: {
-                    id: movie.id,
+                    id: movieId,
                     title: movie.title,
                     vote_average: movie.vote_average,
                     overview: movie.overview,
@@ -41,15 +47,18 @@ export const Movie: FC<IMovieProps> = ({ movie, favoriteMoviesId, favoriteMovies
             return true;
         }
         catch (error) {
+
             console.log(error)
             return false;
         }
-
+        finally {
+            toggleLoading(false)
+        }
     }
 
 
     const unfavoriteMovie = async (movie: IMovie) => {
-
+        toggleLoading(true)
         try {
 
             await removeMovie({
@@ -67,6 +76,9 @@ export const Movie: FC<IMovieProps> = ({ movie, favoriteMoviesId, favoriteMovies
             return false;
         }
 
+        finally {
+            toggleLoading(false)
+        }
     }
 
     return (

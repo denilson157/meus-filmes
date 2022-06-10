@@ -10,7 +10,8 @@ export const Home = () => {
         movieName,
         setMovieName,
         searchMovies,
-        moviesSearched
+        moviesSearched,
+        toggleLoading
     } = UseHome();
 
     return (
@@ -20,7 +21,7 @@ export const Home = () => {
                 <Box sx={{ display: 'flex' }}>
                     <TextField
                         variant="outlined"
-                        placeholder="Ex: Pânico"
+                        placeholder="Ex: Avatar"
                         fullWidth
                         label="Pesquise pelo nome do filme"
                         type="url"
@@ -41,7 +42,7 @@ export const Home = () => {
                 </Box>
 
                 <FeaturedMovies />
-                <SearchedMovies refetchMovies={() => searchMovies()} movies={moviesSearched} />
+                <SearchedMovies toggleLoading={toggleLoading} refetchMovies={() => searchMovies()} movies={moviesSearched} />
             </Grid>
 
         </Grid>

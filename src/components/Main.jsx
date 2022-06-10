@@ -7,9 +7,11 @@ import { Header } from "./Header"
 
 
 export const FavoritesMoviesIdContext = createContext([])
+export const LoadingContext = createContext(false)
 
 export const Main = () => {
     const [movieReducer, favoriteMoviesIdDispatch] = useReducer(MovieReducer, [])
+    
 
     const { data } = useQuery(GET_MOVIES_ID)
 

@@ -1,10 +1,11 @@
-import { AppBar, Toolbar, Typography, MenuItem, Icon } from '@mui/material';
+import { AppBar, Toolbar, Typography, MenuItem, Icon, CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useAppLoadingContext } from '../contexts/LoadingContext';
 import { useAppThemeContext } from '../contexts/ThemeContext';
 
 export const Header = () => {
     const { toggleTheme } = useAppThemeContext();
-
+    const { loading } = useAppLoadingContext();
     return (
         <AppBar>
             <Toolbar>
@@ -27,7 +28,10 @@ export const Header = () => {
                         </Typography>
                     </Link>
                 </MenuItem>
-
+                {
+                    loading &&
+                    <CircularProgress color='secondary'/>
+                }
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 </Typography>
 
